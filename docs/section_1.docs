@@ -1,0 +1,169 @@
+### 클론코딩시 고려할것
+
+1. 화면을 어떻게 만들 것인가?
+    1. 페이지를 넘나들어도 안바뀌는 부분(=레이아웃)
+2. 주소 체계 파악
+3. 새로고침할때 화면, 데이터가 어떻게 바뀌는지
+4. 반응형
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/328a412c-0f9e-4090-a4c4-ab0357947088/Untitled.png)
+
+### 파일 및 폴더 설명
+
+- public 폴더에 들어가있는것들
+    - 넥스트 서버에서 누구나 접근할 수 있게 서빙을 해줌
+- app 폴더가 최상위가 아닌이유
+    - src/app 위치에는 주소와 관련된 파일들어감
+    - 그외 model 폴더, mock 폴더, test 폴더
+- next.confing.js → 넥스트 설정
+
+---
+
+- RootLayout → 모든 페이지에 적용되는 레이아웃(Global Styles 같은 느낌)
+    - RootLayout  → @@@Layout - > @@@Page
+
+### 페이지 구조 만들기
+
+- i/flow/signup & i/flow/login 주소 만들기
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/a21da8bc-3658-44f0-b4ec-34892337ff92/Untitled.png)
+
+- dynamic routing → [ ]
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/26de304a-17c0-4a87-8332-4e88822a4011/Untitled.png)
+
+cf) 동적 라우팅한 이름[username]이 다른 폴더 이름과 겹친다면? 순위에서 밀려남
+
+- app 경로에 404 페이지 하나 만들어두자
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/5c26de4d-099d-4de6-9443-0e6be7dba52c/Untitled.png)
+
+### 그룹 짓기
+
+- 기준 ?? → 보통은 레이아웃
+- 소괄호 이용
+- 주소에는 관여하지 않음
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/6413c6a5-0b05-43b9-93c5-39fd2368ff82/Untitled.png)
+
+### 레이아웃과 템플릿의 차이
+
+- 레이아웃 : 리렌더링 x
+- 템플릿 : 리렌더링 o
+
+⇒ 두개가 공존하면 안됌
+
+⇒ 보통은 레이아웃을 사용 
+
+⇒ 페이지가 넘어간 기록을 할때 템플릿을 사용
+
+### 넥스트에서는 a 태그 대신 Link 를 사용
+
+- 페이지가 새로고침 되는 행동을 하면 안되기 때문
+
+### Image 태그
+
+넥스트에서는 Image 태그를 사용해서 이미지 최적화를 할 수 있음
+
+[Optimizing: Images](https://nextjs.org/docs/app/building-your-application/optimizing/images)
+
+### CSS module(스타일링)
+
+- vanilla extract → `Windows 와 문제`
+- Styled Component  → `Server Component SSR 에서 문제`
+- css module - > 간단함
+
+---
+
+- page.module.css 에 작성
+- 필요한 파일에서 `styles` 을 import 하여 사용
+- 컨테이너 별로 모듈을 다르게 해줌
+    - `styles.[module].container`
+
+### 참고할만한 CSS
+
+- dvm, dvh → 모바일에서 주소창 탓에 레이아웃이 깨지는 것을 방지
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/97fb057c-b1e3-4440-9b61-7dde260aa76f/Untitled.png)
+    
+
+### 타입스크립트 요약
+
+- 변수, 매개 변수, 리턴 값 3개 항목에 타입을 부여하면 된다.
+
+### 클라이언트 컴포넌트
+
+- useState(), useEffect()
+- 만드는법
+    - 최상단에 `“use client”` 주석
+        - (왤~케 간단해)
+- next 는 기본적으로 서버 컴포넌트임
+    - async 를 추가해서 비동기로 만들수도있음
+    - 장점 ?? → 나중에 알려준다함
+
+### 패러랠 라우트
+
+- 한 페이지에서 두개 이상의 화면을동시에 보여주는 것
+- 폴더 이름에 `@`를 붙임
+- 패러랠 라우트 폴더와 적용하는 페이지, 레이아웃이 `같은 부모 폴더`에 있어야함
+
+### default.tsx
+
+- 패러렐 라우트의 기본값
+    
+    ```jsx
+    export default function Default() {
+      return null;
+    }
+    ```
+    
+
+### 인터셉팅 라우트(가로채기 라우트)
+
+- 서로 주소가 다른데 같이 보여주게해줌
+- `(.)`
+    
+    ![인터셉트 라우트가 페이지를 가로챔](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/995f0b3f-2b5f-49af-957b-871219a7400c/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-03-23_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.53.39.png)
+    
+    인터셉트 라우트가 페이지를 가로챔
+    
+- 클라이언트에서 라우팅 할 때만 인터셉트 라우팅이 적용됨
+- ../ 처럼 상위 폴더로 올라갈때 패러렐라우트(@)는 무시함
+
+<aside>
+❓ 그럼 인터셉트 라우터가 가로채는 페이지는 평생 실행되는 것이 아닌가?
+
+⇒ `No, 브라우저 주소로 직접 접근 OR 새로고침시에 실행된다 !`
+⇒ 다른 페이지에서 <Link>를 통해 접근할 때는 인터셉트 페이지가 실행
+⇒ 서버에서 리다리엑트 시켜줄때도 인터셉팅 X
+
+</aside>
+
+### 프라이빗 폴더
+
+- 일반적으로 공통 코드(공용 컴포넌트, css)를 관리
+- 그 외 → 폴더 정리용
+- `_`  으로 사용
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/10e13313-db95-426d-8d86-990aa10b0372/Untitled.png)
+    
+
+### 참고
+
+- 서버 컴포넌트 → 클라이언트 컴포넌트 import 가능
+- 클라이언트 컴포넌트 → 서버 컴포넌트 import 불가능 (서버 컴포넌트가 클라이언트 컴포넌트로 바뀜)
+
+### useRouter()
+
+- replace() vs push()
+    - 공통 : 페이지가 이동한다
+    - 차이 : 뒤로가기를 했을때 다름, replace() 는 히스토리가 남지 않는다
+        
+        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/2c3da9ff-d788-4fed-bcbf-462e8b42f5e0/Untitled.png)
+        
+        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75ae365e-1848-48d7-9b32-ebbeca4760d9/6989985e-1434-4875-8aa1-178c6bcd2f18/Untitled.png)
+        
+
+### 모달이 여러개일때(패러렐 라우트가 여러개)
+
+- 그냥 여러개 적용해주면 된다.
