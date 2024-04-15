@@ -1,0 +1,73 @@
+- 컴포넌트(모달)에 클릭하는 버튼이 많다면 클라이언트 컴포넌트로 사용
+- 나중에 필요에 따라서 서버컴포넌트로 변경하고 이벤트는 별도의 컴포넌트로 분리해서 사용해도 됨
+- 타입스크립트에서 useRef() 사용
+    - `useRef<HTMLInputElement>()null`
+- input vs textarea
+    - 한줄 vs 여러줄
+
+### usePathname()
+
+- 경로에 따라 컴포넌트를 다르게 보여줄때 사용
+- hook 은 거의 클라이언트 컴포넌트
+- `/` 부터 `?` 까지 가 pathname
+    
+    ```jsx
+    localhost:3000/explore/hello?q=zxc
+    ```
+    
+
+### SreachParams
+
+- 주소창에 정보를 넣음
+- `&` 로 연결
+- 페이지의 정보를 미리 가져올 수 있음
+- localhost:3000/search?**`q=”악의%20평범성”`**&**`src=trend_click`**&**`vertical=trends`**
+
+```jsx
+SearchForm q={searchParams.q} 
+```
+
+### useSearchParams()
+
+- hook 으로 편하게 사용
+
+```jsx
+const searchParams = useSearchParams();
+searchParams.get(’q’) 
+
+/search?${searchParams.toString()}&f=live // 기존의 params 를 사용하고 f를 추가
+```
+
+### onClickCapture
+
+- 이벤트 캡처링
+- 클릭이벤트 A태그랑 겹칠때 활용
+
+### cf) Yagni
+
+- You ain’t gonna need it
+- 폴더 구조 같이 처음부터 깊게 고민하지 마라
+- 추후에 재사용하거나 문제가 생길때 고쳐도 된다
+
+### faker.js
+
+- 더미데이터를 쉽게 넣어주는 라이브러리
+- @faker-js/faker
+- `cf) 라이브러리 설치시 공식문서를 꼭 확인하자`
+    - npm 생태계는 패키지도 많고 관리하는 사람이 많음
+    - 라이브러리를 망쳐놓고 도망갈 수 있다.
+
+```jsx
+const target = {
+    postId: 1,
+    User: {
+      id: "elonmusk",
+      nickname: "Elon Musk",
+      image: "/yRsRRjGO.jpg",
+    },
+    content: "클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ",
+    createdAt: new Date(),
+    Images: [{ 
+	    imageId: 1, link: faker.image.urlLoremFlickr() }
+  };
+```
